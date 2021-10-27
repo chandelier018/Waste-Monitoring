@@ -19,7 +19,9 @@ $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
-$routes->set404Override();
+$routes->set404Override(function () {
+    return view('not_found');
+});
 $routes->setAutoRoute(true);
 
 /*
@@ -46,7 +48,7 @@ $routes->get('manage/reports', 'ManageReports::index', ['filter' => 'authGuard']
 
 $routes->get('/barangay_daily_submission', 'Dashboard::brgyDaily', ['filter' => 'authGuard']);
 $routes->get('/view_notification', 'Notif::viewNotif', ['filter' => 'authGuard']);
-$routes->get('/dashboards', 'administrator::dashboard', ['filter' => 'authGuard']);
+$routes->get('/dashboards', 'Dashboard::dashboardAdmin', ['filter' => 'authGuard']);
 $routes->get('reports', 'GenerateReport::reportAdministrator', ['filter' => 'authGuard']);
 $routes->get('/change_password_administrator', 'Password::AdministratorPass', ['filter' => 'authGuard']);
 $routes->get('/change_password_superadmin', 'Password::SuperadminPass', ['filter' => 'authGuard']);

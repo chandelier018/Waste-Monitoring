@@ -28,10 +28,50 @@ class Dashboard extends BaseController
 		$data['totalBrgy'] = $totalbrgy->BrgyNumUsers();
 		$data['totalDump'] = $totalbrgy->DumpNumUsers();
 		$data['dumpWaste'] = $dumpsite->DailyWaste();
-		$start_date = $this->request->getVar('DateFrom');
-		$end_date = $this->request->getVar('DateTo');
+		$data['wasteList'] = $waste->findAll();
+
 
 		return view('admin/dashboard', $data);
+	}
+	public function dashboardAdmin()
+	{
+		$brgy = new Barangay();
+		$totalbrgy = new ManageBarangayModel();
+		$waste = new WasteModel();
+		$chartModel = new ChartModel();
+		$dumpsite = new Dumpsite();
+		$data['wasteType'] = $chartModel->fetch_day();
+		$data['dumpN'] = $dumpsite->DailySubmissions();
+		$data['wasteN'] = $brgy->DailyWaste();
+		$data['brgyN'] = $brgy->DailySubmissions();
+		$data['totalUsers'] = $totalbrgy->countAllResults();
+		$data['totalBrgy'] = $totalbrgy->BrgyNumUsers();
+		$data['totalDump'] = $totalbrgy->DumpNumUsers();
+		$data['dumpWaste'] = $dumpsite->DailyWaste();
+		$data['wasteList'] = $waste->findAll();
+
+
+		return view('administrator/dashboard', $data);
+	}
+	public function FiltersDate()
+	{
+		$start_date = $this->request->getVar('dateFrom');
+		$end_date = $this->request->getVar('dateTo');
+
+		$brgyWaste = new Barangay();
+		$filtered = $brgyWaste->FilteredWasteB($start_date, $end_date);
+
+		echo json_encode($filtered);
+	}
+	public function FiltersDateDump()
+	{
+		$start_date =  $this->request->getVar('dateFrom');
+		$end_date = $this->request->getVar('dateTo');
+
+		$brgyWaste = new Dumpsite();
+		$filtered = $brgyWaste->FilteredWasteD($start_date, $end_date);
+
+		echo json_encode($filtered);
 	}
 	public function Demo()
 	{

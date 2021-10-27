@@ -70,4 +70,18 @@ class Dumpsite extends Model
 
 		return $data;
 	}
+	public function FilteredWasteD($start_date, $end_date)
+	{
+		date_default_timezone_set('Asia/Manila');
+		$where = "DATE( waste_dump.collection_date) BETWEEN '$start_date' AND '$end_date'";
+		$builder = $this->table('waste_dump');
+		$builder->select('SUM(ROUND(waste_dump.volume, 2)) as vol, waste_dump.waste_type as wasteName, waste_dump.waste_type as wasteType, waste_dump.collection_date');
+		$builder->join('waste_type', 'waste_dump.waste_type = waste_type.waste')
+			->where($where)
+			->groupBy('waste_type.waste');
+
+		$records = $builder->get()->getResult();
+
+		return $records;
+	}
 }

@@ -13,6 +13,7 @@
             <div class="container">
 
                 <section class="content">
+                    <div class="text-danger" id="dateRange_error"></div>
                     <div class="row">
                         <div class="col-md-6">
                             <input placeholder="Start Date" class="form-control" type="text" onfocusin="(this.type='date')" onfocusout="(this.type='text')" id="dateFrom">
@@ -21,13 +22,15 @@
                             <input placeholder="End Date" class="form-control" type="text" onfocusin="(this.type='date')" onfocusout="(this.type='text')" id="dateTo">
 
                         </div>
+                    </div><br>
+                    <div class="row">
+
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-warning " id="btn_filter"> <i class="fas fa-check-square"></i> Filter</button>
+                            <button class="btn btn-danger" id="btn_reset"><i class="fas fa-times"></i> Reset</button>
+                        </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-2" id="fromD"></div>
-                        <div class="col-sm-2" id="toD"></div>
-                        <div class="col-sm-4"></div>
-                    </div> -->
+
                     <br>
                     <div class="row">
                         <div class="col-12 col-sm-6 col-md-3">
@@ -77,73 +80,192 @@
 
                                     <div class="info-box-content">
                                         <span class="info-box-text"><?= $row['wasteName']; ?></span>
-                                        <span class="info-box-number"><?= $row['vol'] ?> Tons</span>
+                                        <span class="info-box-number"><?= $row['vol'] ?> <small> Tons</small> </span>
                                     </div>
                                     <!-- /.info-box-content -->
                                 </div>
                                 <!-- /.info-box -->
                             </div>
                             <!-- /.col -->
-                        <?php
+                            <?php
                             $n++;
                         }
+                        if (empty($wasteN[0])) {
+                            $a = 0;
+                            foreach ($wasteList as $rows) {
+                                if ($a == 0) {
+                                    $classC = "bg-warning";
+                                    $icon = "fas fa-trash-restore-alt";
+                                } else if ($a == 1) {
+                                    $classC = "bg-danger";
+                                    $icon = "fas fa-syringe";
+                                } else if ($a == 2) {
+                                    $classC = "bg-info";
+
+                                    $icon = "fas fa-recycle";
+                                } else {
+                                    $classC = "bg-success";
+                                    $icon = "fas fa-trash";
+                                }
+                            ?>
+                                <div class="col-12 col-sm-6 col-md-3" id="box">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon <?php echo $classC; ?> elevation-1"><i class="<?php echo $icon; ?>"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><?= $rows['waste']; ?></span>
+                                            <span class="info-box-number">0<small> Ton</small> </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </div>
+                        <?php
+                                $a++;
+                            }
+                        }
+
                         ?>
-                        <!-- fix for small devices only -->
+
+                        <div class="clearfix hidden-md-up"></div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="info-box">
+                                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Dumpsite Submitted</span>
+                                    <span class="info-box-number">
+                                        <?php
+
+                                        $percentage = ($dumpN / $totalDump) * 100;
+
+                                        echo number_format($percentage, 0);
+
+
+
+                                        ?>
+                                        <small>%</small>
+                                    </span>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                            <!-- /.info-box -->
+                        </div>
+                        <!-- /.col -->
+                        <?php
+                        $n = 0;
+                        foreach ($dumpWaste as $row) {
+                            if ($n == 0) {
+                                $classC = "bg-info";
+                                $icon = "fas fa-recycle ";
+                            } else if ($n == 1) {
+                                $classC = "bg-danger";
+                                $icon = "fas fa-syringe";
+                            } else if ($n == 2) {
+                                $classC = "bg-warning";
+
+                                $icon = "fas fa-trash-restore-alt";
+                            } else {
+                                $classC = "bg-success";
+                                $icon = "fas fa-trash";
+                            }
+
+                        ?>
+                            <div class="col-12 col-sm-6 col-md-3">
+                                <div class="info-box mb-3">
+                                    <span class="info-box-icon  <?php echo $classC; ?> elevation-1"><i class="<?php echo $icon; ?>"></i></span>
+
+                                    <div class="info-box-content">
+                                        <span class="info-box-text"><?= $row['wasteName']; ?></span>
+                                        <span class="info-box-number"><?= $row['vol'] ?> <small> Tons</small> </span>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                                <!-- /.info-box -->
+                            </div>
+                            <!-- /.col -->
+                            <?php
+                            $n++;
+                        }
+                        if (empty($wasteN[0])) {
+                            $a = 0;
+                            foreach ($wasteList as $rows) {
+                                if ($a == 0) {
+                                    $classC = "bg-warning";
+                                    $icon = "fas fa-trash-restore-alt";
+                                } else if ($a == 1) {
+                                    $classC = "bg-danger";
+                                    $icon = "fas fa-syringe";
+                                } else if ($a == 2) {
+                                    $classC = "bg-info";
+
+                                    $icon = "fas fa-recycle";
+                                }
+                            ?>
+                                <div class="col-12 col-sm-6 col-md-3" id="box">
+                                    <div class="info-box mb-3">
+                                        <span class="info-box-icon <?php echo $classC; ?> elevation-1"><i class="<?php echo $icon; ?>"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><?= $rows['waste']; ?></span>
+                                            <span class="info-box-number">0<small> Ton</small> </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    <!-- /.info-box -->
+                                </div>
+                        <?php
+                                $a++;
+                            }
+                        }
+
+
+
+                        ?>
+
+
                         <div class="clearfix hidden-md-up"></div>
 
 
-                        <!-- /.col -->
-
                     </div>
+                    <!-- Start For Barangay Records Only -->
                     <div class="card">
-                        <div class="row">
+                        <div class="row appendDiv" id="">
                             <div class="col-sm-3 col-6">
                                 <div class="description-block border-right">
-                                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                                    <h5 class="description-header">$35,210.43</h5>
-                                    <span class="description-text">TOTAL REVENUE</span>
+                                    <span class="description-percentage text-warning"><i class="fas fa-home"></i></span>
+                                    <h5 class="description-header">Barangay Records</h5>
+
+                                    <small id="datesRange"></small>
+
                                 </div>
-                                <!-- /.description-block -->
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-3 col-6">
-                                <div class="description-block border-right">
-                                    <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
-                                    <h5 class="description-header">$10,390.90</h5>
-                                    <span class="description-text">TOTAL COST</span>
-                                </div>
-                                <!-- /.description-block -->
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-3 col-6">
-                                <div class="description-block border-right">
-                                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
-                                    <h5 class="description-header">$24,813.53</h5>
-                                    <span class="description-text">TOTAL PROFIT</span>
-                                </div>
-                                <!-- /.description-block -->
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-3 col-6">
-                                <div class="description-block">
-                                    <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
-                                    <h5 class="description-header">1200</h5>
-                                    <span class="description-text">GOAL COMPLETIONS</span>
-                                </div>
-                                <!-- /.description-block -->
                             </div>
                         </div>
+                        <div class="row appendDivDump" id="">
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage text-warning"><i class="fas fa-dumpster"></i></span>
+                                    <h5 class="description-header">Dumpsite Records</h5>
+
+                                    <small id="datesRangeD"></small>
+
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <!-- /.col -->
+
             </div>
 
         </div>
-        <!-- /.card-header -->
-    </div>
-    <!-- /.ROW -->
+        <!-- /.ROW -->
 
 
-    </section>
+        </section>
 
 
 
@@ -156,6 +278,134 @@
     <?= $this->include('layouts/script.php'); ?>
     <?= $this->include('settings/limit.php'); ?>
 </body>
+<script>
+    $(document).ready(function() {
+        $('#btn_reset').click(function() {
+            window.location.reload();
+        });
+        $('#btn_filter').click(function() {
+            var dateFrom = $('#dateFrom').val();
+            var dateTo = $('#dateTo').val();
+            if (dateFrom > dateTo) {
+                toastr.error('Date range is invalid! Please try again!');
+                exit();
+            } else if (dateFrom == "" || dateTo == "") {
+                toastr.warning('Please enter a date.');
+                exit();
+            }
+
+            $.ajax({
+                url: "<?= site_url('dashboard/FiltersDate') ?>",
+                method: "POST",
+                data: {
+                    dateFrom: dateFrom,
+                    dateTo: dateTo
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    $('#datesRange').text(dateFrom + " to " + dateTo);
+                    for (let i = 0; i < data.length; i++) {
+                        var volume = data[i].vol;
+                        var name = data[i].wasteName;
+                        $('.namesT').text(name);
+                        $('.volumeT').text(volume);
+                        $('.appendDiv').append([
+                            $('<div/>', {
+                                "class": "col-sm-3 col-6 appendDiv2",
+
+                            }).append([
+                                $('<div/>', {
+                                    "class": "description-block border-right",
+
+
+                                }).append([
+                                    $('<span/>', {
+                                        "class": "description-percentage text-success",
+                                        "text": volume
+                                    }).append([
+                                        $('<i/>', {
+                                            "class": "fas fa-caret-up",
+
+                                        })
+                                    ])
+
+                                ]).append([
+                                    $('<h5/>', {
+                                        "class": "description-header",
+                                        "text": "Tons"
+                                    })
+                                ]).append([
+                                    $('<span/>', {
+                                        "class": "description-text",
+                                        "text": name
+                                    })
+                                ])
+                            ])
+                        ])
+
+                    }
+                }
+
+            });
+            $.ajax({
+                url: "<?= site_url('dashboard/FiltersDateDump') ?>",
+                method: "POST",
+                data: {
+                    dateFrom: dateFrom,
+                    dateTo: dateTo
+                },
+                dataType: "JSON",
+                success: function(data) {
+                    $('#datesRangeD').text(dateFrom + " to " + dateTo);
+                    for (let i = 0; i < data.length; i++) {
+                        var volume = data[i].vol;
+                        var name = data[i].wasteName;
+                        $('.namesT').text(name);
+                        $('.volumeT').text(volume);
+                        $('.appendDivDump').append([
+                            $('<div/>', {
+                                "class": "col-sm-3 col-6 appendDiv2",
+
+                            }).append([
+                                $('<div/>', {
+                                    "class": "description-block border-right",
+
+
+                                }).append([
+                                    $('<span/>', {
+                                        "class": "description-percentage text-success",
+                                        "text": volume
+                                    }).append([
+                                        $('<i/>', {
+                                            "class": "fas fa-caret-up",
+
+                                        })
+                                    ])
+
+                                ]).append([
+                                    $('<h5/>', {
+                                        "class": "description-header",
+                                        "text": "Tons"
+                                    })
+                                ]).append([
+                                    $('<span/>', {
+                                        "class": "description-text",
+                                        "text": name
+                                    })
+                                ])
+                            ])
+                        ])
+
+                    }
+                }
+
+            });
+            $('#btn_filter').attr('disabled', 'disabled');
+            $('#dateFrom').attr('disabled', 'disabled');
+            $('#dateTo').attr('disabled', 'disabled');
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         $('#dateFrom').change(function() {

@@ -18,7 +18,8 @@ class Barangay extends Model
 		'volume',
 		'waste_type',
 		'brgy_name',
-		'created_at'
+		'created_at',
+		'collection_date',
 	];
 
 	// Dates
@@ -62,12 +63,26 @@ class Barangay extends Model
 		$dayC = date('Y-m-d');
 		//	$db = db_connect();
 		$builder = $this->table('waste_brgy');
-		$builder->select('SUM(ROUND(waste_brgy.volume, 2)) as vol, waste_type.waste as wasteName, waste_brgy.waste_type as wasteType, waste_brgy.created_at');
+		$builder->select('SUM(ROUND(waste_brgy.volume, 2)) as vol, waste_type.waste as wasteName, waste_brgy.waste_type as wasteType, waste_brgy.collection_date');
 		$builder->join('waste_type', 'waste_brgy.waste_type = waste_type.waste')
-			->where('DATE( waste_brgy.created_at)', $dayC)
+			->where('DATE( waste_brgy.collection_date)', $dayC)
 			->groupBy('waste_type.waste');
 		$data = $builder->get()->getResultArray();
 
 		return $data;
+	}
+	public function FilteredWasteB($start_date, $end_date)
+	{
+		date_default_timezone_set('Asia/Manila');
+		$where = "DATE( waste_brgy.collection_date) BETWEEN '$start_date' AND '$end_date'";
+		$builder = $this->table('waste_brgy');
+		$builder->select('SUM(ROUND(waste_brgy.volume, 2)) as vol, waste_type.waste as wasteName, waste_brgy.waste_type as wasteType, waste_brgy.collection_date');
+		$builder->join('waste_type', 'waste_brgy.waste_type = waste_type.waste')
+			->where($where)
+			->groupBy('waste_type.waste');
+
+		$records = $builder->get()->getResult();
+
+		return $records;
 	}
 }

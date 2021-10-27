@@ -154,6 +154,7 @@
 
     <?= $this->include('layouts/footer.php'); ?>
     <?= $this->include('layouts/script.php'); ?>
+    <?= $this->include('settings/limit.php'); ?>
 </body>
 
 
@@ -613,6 +614,24 @@
         }
 
     });
+</script>
+<script>
+    $('#setLimit').click(function() {
+        $('#limitModal').modal('show');
+        $('#limit_button').click(function() {
+            var limitW = $('#limitW').val();
+            $.ajax({
+                url: "<?= site_url('ConfigLimit/writeLimit') ?>",
+                method: "POST",
+                data: {
+                    limitW: limitW
+                },
+                success: function() {
+                    $('#limitModal').modal('hide');
+                }
+            });
+        });
+    })
 </script>
 
 </html>

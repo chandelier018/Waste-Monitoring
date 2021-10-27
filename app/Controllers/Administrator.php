@@ -18,12 +18,7 @@ class Administrator extends BaseController
 		session()->destroy();
 		return redirect()->to('administrator');
 	}
-	public function dashboard()
-	{
-		//$session = session();
-		// echo "Hello : ".$session->get('lname');
-		return view('administrator/dashboard');
-	}
+
 	public function loginAuth()
 	{
 		$session = session();

@@ -23,7 +23,7 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $baseURL = 'https://localhost/WMS3/public/';
+	public $baseURL = '';
 
 	/**
 	 * --------------------------------------------------------------------------

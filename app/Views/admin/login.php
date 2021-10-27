@@ -16,7 +16,7 @@
     <div class="hold-transition login-page">
         <img src="<?= base_url('assets/img/logo.png') ?>" alt="Logo " style="width:110px; ">
         <nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top ">
-            <a class="navbar-brand " href="admin.html ">
+            <a class="navbar-brand " href="#">
                 <b> Dagupan City Waste Management Division</b></a>
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler " type="button " data-toggle="collapse " data-target="#collapsibleNavbar ">
@@ -24,7 +24,7 @@
             </button>
 
             <!-- Navbar links -->
-            <div class="collapse navbar-collapse " id="collapsibleNavbar ">
+            <!-- <div class="collapse navbar-collapse " id="collapsibleNavbar ">
 
                 <ul class="navbar-nav ">
                     <li class="nav-item ">
@@ -33,7 +33,7 @@
                     <li class="nav-item ">
                         <a class="nav-link " href="FAQ.html ">FAQ</a>
                     </li>
-                </ul>
+                </ul> -->
         </nav>
         <br>
         <?php if (session()->getFlashdata('msg')) : ?>
@@ -78,9 +78,9 @@
                         </div>
 
                     </form>
-                    <p class="mb-1 ">
+                    <!-- <p class="mb-1 ">
                         <a href="forgot-password.html ">I forgot my password</a>
-                    </p>
+                    </p> -->
 
 
 
